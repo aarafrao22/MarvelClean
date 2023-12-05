@@ -1,5 +1,7 @@
 package com.aarafrao.marveluniverse_cleanarchitecture.data.data_source.dto
 
+import com.aarafrao.marveluniverse_cleanarchitecture.data.domain.model.Character
+
 data class Result(
     val comics: Comics,
     val description: String,
@@ -12,4 +14,17 @@ data class Result(
     val stories: Stories,
     val thumbnail: Thumbnail,
     val urls: List<Url>
-)
+) {
+    fun toCharacter(): Character {
+        return Character(
+            id = id,
+            name = name,
+            description = description,
+            thumbnail = thumbnail.path,
+            thumbnailExt = thumbnail.extension,
+            comics = comics.items.map {
+                it.name
+            }
+        )
+    }
+}
